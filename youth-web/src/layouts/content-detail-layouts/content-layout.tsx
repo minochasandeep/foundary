@@ -18,6 +18,7 @@ export default function ContentLayout({
           flexGrow="1"
           width="100%"
           minWidth="0"
+          marginTop={5}
           overflow="auto"
         >
           {content}
