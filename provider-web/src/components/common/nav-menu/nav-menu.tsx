@@ -1,9 +1,7 @@
 import { List, Box } from "@mui/material";
 import { NavMenuProps } from "./types";
 import NavMenuItem from "./nav-menu-item/nav-menu-item";
-import { SearchInput } from "../search-input";
 import { usePathname } from "next/navigation";
-import { useTranslations } from "next-intl";
 import { NAV_DRAWER_WIDTH } from "@/constants/app.constant";
 
 const NavMenu: React.FC<NavMenuProps> = ({
@@ -13,11 +11,6 @@ const NavMenu: React.FC<NavMenuProps> = ({
 }) => {
   const { sx: menuSx, ...menuRest } = restProps || {};
   const pathname = usePathname();
-
-  const handleSearch = (searchText: string) => {
-    // handle search logic here
-    console.log(searchText);
-  };
 
   return (
     <Box 
@@ -34,7 +27,6 @@ const NavMenu: React.FC<NavMenuProps> = ({
       }}
     >
       <Box display="flex" ml= "5px">
-      <SearchInput onSearch={handleSearch} />
       </Box>
       <List
         sx={{
