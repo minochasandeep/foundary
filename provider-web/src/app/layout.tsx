@@ -20,14 +20,7 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  useEffect(() => {
-    if (typeof window !== "undefined" && !appInsights.isInitlized) {
-      if (appInsights.isInitlized) return;
-      appInsights.initilize(
-        process.env.NEXT_PUBLIC_APPINSIGHTS_INSTRUMENTATIONKEY as string,
-      );
-    }
-  }, []);
+  
 
   return (
     <html lang={DEFAULT_LOCALE}>

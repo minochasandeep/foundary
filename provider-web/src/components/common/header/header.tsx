@@ -20,11 +20,7 @@ import { LocaleSelect } from "../locale-select";
 import { useTranslations } from "next-intl";
 
 const HEADER_DATA = [
-  { name: "Page 1", url: "/page1" },
-  { name: "Page 2", url: "/page2" },
-  { name: "Page 3", url: "/page3" },
-  { name: "Page 4", url: "/page4" },
-  { name: "Service Provider", url: "/service-provider" },
+  // { name: "Service Provider", url: "/service-provider" },
 ];
 
 const Header = () => {
