@@ -1,0 +1,20 @@
+{
+  "HomePage": {
+    "title": "Hello Spanish!"
+  },
+  "Header": {
+    "account": "Cuenta",
+    "themeToDark": "Cambiar al modo oscuro",
+    "themeToLight": "Cambiar al modo de luz"
+  },
+  "ListviewTopbar": {
+    "createNew": "Crear nuevo"
+  },
+  "SearchInput": {
+    "search": "buscar"
+  },
+  "DataGrid": {
+    "columns": "Columnas",
+    "filters": "Filtros"
+  }
+}
