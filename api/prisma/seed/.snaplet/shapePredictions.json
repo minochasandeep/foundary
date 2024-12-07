@@ -1,0 +1,538 @@
+[
+  {
+    "schemaName": "public",
+    "tableName": "app_access",
+    "predictions": [
+      {
+        "input": "public app_access abrv",
+        "column": "abrv",
+        "shape": "CREDIT_DEBIT_CVV",
+        "confidence": 0.9798088669776917,
+        "context": "GENERAL",
+        "confidenceContext": 0
+      },
+      {
+        "input": "public app_access created_by",
+        "column": "created_by",
+        "shape": "UUID",
+        "confidence": 0.159769207239151,
+        "context": "GENERAL",
+        "confidenceContext": 0
+      },
+      {
+        "input": "public app_access name",
+        "column": "name",
+        "shape": "SYSTEM_FILE_NAME",
+        "confidence": 0.4770325720310211,
+        "context": "GENERAL",
+        "confidenceContext": 0
+      },
+      {
+        "input": "public app_access updated_by",
+        "column": "updated_by",
+        "shape": "SYSTEM_FILE_NAME",
+        "confidence": 0.2361652851104736,
+        "context": "GENERAL",
+        "confidenceContext": 0
+      }
+    ]
+  },
+  {
+    "schemaName": "public",
+    "tableName": "controller",
+    "predictions": [
+      {
+        "input": "public controller created_by",
+        "column": "created_by",
+        "shape": "DATE",
+        "confidence": 0.2954614162445068,
+        "context": "GENERAL",
+        "confidenceContext": 0
+      },
+      {
+        "input": "public controller display_name",
+        "column": "display_name",
+        "shape": "INTERNET_DISPLAY_NAME",
+        "confidence": 0.9943785071372986,
+        "context": "GENERAL",
+        "confidenceContext": 0
+      },
+      {
+        "input": "public controller name",
+        "column": "name",
+        "shape": "COMPANY_NAME",
+        "confidence": 0.6961655616760254,
+        "context": "GENERAL",
+        "confidenceContext": 0
+      },
+      {
+        "input": "public controller serial_number",
+        "column": "serial_number",
+        "shape": "VEHICLE_VRM",
+        "confidence": 0.9529594779014587,
+        "context": "GENERAL",
+        "confidenceContext": 0
+      },
+      {
+        "input": "public controller updated_by",
+        "column": "updated_by",
+        "shape": "LOCATION_BUILDING_NUMBER",
+        "confidence": 0.2213919013738632,
+        "context": "GENERAL",
+        "confidenceContext": 0
+      }
+    ]
+  },
+  {
+    "schemaName": "public",
+    "tableName": "group",
+    "predictions": [
+      {
+        "input": "public group abrv",
+        "column": "abrv",
+        "shape": "CREDIT_DEBIT_CVV",
+        "confidence": 0.9898410439491272,
+        "context": "GENERAL",
+        "confidenceContext": 0
+      },
+      {
+        "input": "public group created_by",
+        "column": "created_by",
+        "shape": "DATE",
+        "confidence": 0.3582066893577576,
+        "context": "GENERAL",
+        "confidenceContext": 0
+      },
+      {
+        "input": "public group name",
+        "column": "name",
+        "shape": "COMPANY_NAME",
+        "confidence": 0.9052385091781616,
+        "context": "GENERAL",
+        "confidenceContext": 0
+      },
+      {
+        "input": "public group updated_by",
+        "column": "updated_by",
+        "shape": "VEHICLE_TYPE",
+        "confidence": 0.1148840337991714,
+        "context": "GENERAL",
+        "confidenceContext": 0
+      }
+    ]
+  },
+  {
+    "schemaName": "public",
+    "tableName": "group_member",
+    "predictions": [
+      {
+        "input": "public group_member created_by",
+        "column": "created_by",
+        "shape": "DATE",
+        "confidence": 0.2173571586608887,
+        "context": "GENERAL",
+        "confidenceContext": 0
+      }
+    ]
+  },
+  {
+    "schemaName": "audit",
+    "tableName": "logged_actions",
+    "predictions": [
+      {
+        "input": "audit logged_actions action",
+        "column": "action",
+        "shape": "DATABASE_COLUMN",
+        "confidence": 0.2737296223640442,
+        "context": "GENERAL",
+        "confidenceContext": 0
+      },
+      {
+        "input": "audit logged_actions application_name",
+        "column": "application_name",
+        "shape": "SYSTEM_FILE_NAME",
+        "confidence": 0.9935617446899414,
+        "context": "GENERAL",
+        "confidenceContext": 0
+      },
+      {
+        "input": "audit logged_actions client_query",
+        "column": "client_query",
+        "shape": "SYSTEM_FILE_NAME",
+        "confidence": 0.9589500427246094,
+        "context": "GENERAL",
+        "confidenceContext": 0
+      },
+      {
+        "input": "audit logged_actions schema_name",
+        "column": "schema_name",
+        "shape": "DATABASE_COLLATION",
+        "confidence": 0.5937663316726685,
+        "context": "GENERAL",
+        "confidenceContext": 0
+      },
+      {
+        "input": "audit logged_actions session_user_name",
+        "column": "session_user_name",
+        "shape": "USERNAME",
+        "confidence": 0.9556213021278381,
+        "context": "GENERAL",
+        "confidenceContext": 0
+      },
+      {
+        "input": "audit logged_actions table_name",
+        "column": "table_name",
+        "shape": "DATABASE_COLUMN",
+        "confidence": 0.5954068303108215,
+        "context": "GENERAL",
+        "confidenceContext": 0
+      }
+    ]
+  },
+  {
+    "schemaName": "public",
+    "tableName": "organization",
+    "predictions": [
+      {
+        "input": "public organization abrv",
+        "column": "abrv",
+        "shape": "CREDIT_DEBIT_CVV",
+        "confidence": 0.9856640100479126,
+        "context": "GENERAL",
+        "confidenceContext": 0
+      },
+      {
+        "input": "public organization created_by",
+        "column": "created_by",
+        "shape": "DATE",
+        "confidence": 0.3199698030948639,
+        "context": "GENERAL",
+        "confidenceContext": 0
+      },
+      {
+        "input": "public organization display_name",
+        "column": "display_name",
+        "shape": "INTERNET_DISPLAY_NAME",
+        "confidence": 0.9912801384925842,
+        "context": "GENERAL",
+        "confidenceContext": 0
+      },
+      {
+        "input": "public organization name",
+        "column": "name",
+        "shape": "COMPANY_NAME",
+        "confidence": 0.9804131388664246,
+        "context": "GENERAL",
+        "confidenceContext": 0
+      },
+      {
+        "input": "public organization updated_by",
+        "column": "updated_by",
+        "shape": "COMPANY_CATCH_PHRASE",
+        "confidence": 0.1826843768358231,
+        "context": "GENERAL",
+        "confidenceContext": 0
+      }
+    ]
+  },
+  {
+    "schemaName": "public",
+    "tableName": "organization_site",
+    "predictions": [
+      {
+        "input": "public organization_site created_by",
+        "column": "created_by",
+        "shape": "COMPANY_NAME",
+        "confidence": 0.2386800497770309,
+        "context": "GENERAL",
+        "confidenceContext": 0
+      }
+    ]
+  },
+  {
+    "schemaName": "public",
+    "tableName": "permission",
+    "predictions": [
+      {
+        "input": "public permission abrv",
+        "column": "abrv",
+        "shape": "CREDIT_DEBIT_CVV",
+        "confidence": 0.9890137314796448,
+        "context": "GENERAL",
+        "confidenceContext": 0
+      },
+      {
+        "input": "public permission created_by",
+        "column": "created_by",
+        "shape": "UUID",
+        "confidence": 0.4231318831443787,
+        "context": "GENERAL",
+        "confidenceContext": 0
+      },
+      {
+        "input": "public permission name",
+        "column": "name",
+        "shape": "PERMISSION",
+        "confidence": 0.6813264489173889,
+        "context": "GENERAL",
+        "confidenceContext": 0
+      },
+      {
+        "input": "public permission updated_by",
+        "column": "updated_by",
+        "shape": "INTERNET_DISPLAY_NAME",
+        "confidence": 0.1761862188577652,
+        "context": "GENERAL",
+        "confidenceContext": 0
+      }
+    ]
+  },
+  {
+    "schemaName": "public",
+    "tableName": "permission_member",
+    "predictions": [
+      {
+        "input": "public permission_member created_by",
+        "column": "created_by",
+        "shape": "UUID",
+        "confidence": 0.1953658312559128,
+        "context": "GENERAL",
+        "confidenceContext": 0
+      }
+    ]
+  },
+  {
+    "schemaName": "public",
+    "tableName": "preference",
+    "predictions": [
+      {
+        "input": "public preference created_by",
+        "column": "created_by",
+        "shape": "DATE",
+        "confidence": 0.2850692570209503,
+        "context": "GENERAL",
+        "confidenceContext": 0
+      },
+      {
+        "input": "public preference key",
+        "column": "key",
+        "shape": "TOKEN",
+        "confidence": 0.6558032035827637,
+        "context": "GENERAL",
+        "confidenceContext": 0
+      },
+      {
+        "input": "public preference updated_by",
+        "column": "updated_by",
+        "shape": "SYSTEM_FILE_NAME",
+        "confidence": 0.09321471303701401,
+        "context": "GENERAL",
+        "confidenceContext": 0
+      }
+    ]
+  },
+  {
+    "schemaName": "public",
+    "tableName": "role",
+    "predictions": [
+      {
+        "input": "public role abrv",
+        "column": "abrv",
+        "shape": "CREDIT_DEBIT_CVV",
+        "confidence": 0.989938497543335,
+        "context": "GENERAL",
+        "confidenceContext": 0
+      },
+      {
+        "input": "public role created_by",
+        "column": "created_by",
+        "shape": "DATE",
+        "confidence": 0.4169634282588959,
+        "context": "GENERAL",
+        "confidenceContext": 0
+      },
+      {
+        "input": "public role desc",
+        "column": "desc",
+        "shape": "SWIFT_CODE",
+        "confidence": 0.9845879077911377,
+        "context": "GENERAL",
+        "confidenceContext": 0
+      },
+      {
+        "input": "public role name",
+        "column": "name",
+        "shape": "PERSON_JOB_TITLE",
+        "confidence": 0.7757683992385864,
+        "context": "GENERAL",
+        "confidenceContext": 0
+      },
+      {
+        "input": "public role updated_by",
+        "column": "updated_by",
+        "shape": "PERSON_JOB_TITLE",
+        "confidence": 0.2311327159404755,
+        "context": "GENERAL",
+        "confidenceContext": 0
+      }
+    ]
+  },
+  {
+    "schemaName": "public",
+    "tableName": "role_member",
+    "predictions": [
+      {
+        "input": "public role_member created_by",
+        "column": "created_by",
+        "shape": "PERSON_FULL_NAME",
+        "confidence": 0.2656122744083405,
+        "context": "GENERAL",
+        "confidenceContext": 0
+      }
+    ]
+  },
+  {
+    "schemaName": "public",
+    "tableName": "site",
+    "predictions": [
+      {
+        "input": "public site abrv",
+        "column": "abrv",
+        "shape": "CREDIT_DEBIT_CVV",
+        "confidence": 0.9854272603988647,
+        "context": "GENERAL",
+        "confidenceContext": 0
+      },
+      {
+        "input": "public site created_by",
+        "column": "created_by",
+        "shape": "UUID",
+        "confidence": 0.3359441757202148,
+        "context": "GENERAL",
+        "confidenceContext": 0
+      },
+      {
+        "input": "public site display_name",
+        "column": "display_name",
+        "shape": "INTERNET_DISPLAY_NAME",
+        "confidence": 0.9937945604324341,
+        "context": "GENERAL",
+        "confidenceContext": 0
+      },
+      {
+        "input": "public site name",
+        "column": "name",
+        "shape": "COMPANY_NAME",
+        "confidence": 0.7429971694946289,
+        "context": "GENERAL",
+        "confidenceContext": 0
+      },
+      {
+        "input": "public site updated_by",
+        "column": "updated_by",
+        "shape": "LOCATION_BUILDING_NUMBER",
+        "confidence": 0.1267960071563721,
+        "context": "GENERAL",
+        "confidenceContext": 0
+      }
+    ]
+  },
+  {
+    "schemaName": "public",
+    "tableName": "user",
+    "predictions": [
+      {
+        "input": "public user created_by",
+        "column": "created_by",
+        "shape": "DATE",
+        "confidence": 0.4078683257102966,
+        "context": "GENERAL",
+        "confidenceContext": 0
+      },
+      {
+        "input": "public user email",
+        "column": "email",
+        "shape": "EMAIL",
+        "confidence": 0.99404376745224,
+        "context": "GENERAL",
+        "confidenceContext": 0
+      },
+      {
+        "input": "public user external_auth_id",
+        "column": "external_auth_id",
+        "shape": "UUID",
+        "confidence": 0.9958070516586304,
+        "context": "GENERAL",
+        "confidenceContext": 0
+      },
+      {
+        "input": "public user external_auth_provider",
+        "column": "external_auth_provider",
+        "shape": "AUTHENTICATION_PROVIDER",
+        "confidence": 0.9838539361953735,
+        "context": "GENERAL",
+        "confidenceContext": 0
+      },
+      {
+        "input": "public user first_name",
+        "column": "first_name",
+        "shape": "PERSON_FIRST_NAME",
+        "confidence": 0.9833793044090271,
+        "context": "GENERAL",
+        "confidenceContext": 0
+      },
+      {
+        "input": "public user last_name",
+        "column": "last_name",
+        "shape": "PERSON_LAST_NAME",
+        "confidence": 0.9846183657646179,
+        "context": "GENERAL",
+        "confidenceContext": 0
+      },
+      {
+        "input": "public user phone_number",
+        "column": "phone_number",
+        "shape": "PHONE_NUMBER",
+        "confidence": 0.9720039367675781,
+        "context": "GENERAL",
+        "confidenceContext": 0
+      },
+      {
+        "input": "public user updated_by",
+        "column": "updated_by",
+        "shape": "UUID",
+        "confidence": 0.157162219285965,
+        "context": "GENERAL",
+        "confidenceContext": 0
+      }
+    ]
+  },
+  {
+    "schemaName": "public",
+    "tableName": "user_app_access",
+    "predictions": [
+      {
+        "input": "public user_app_access created_by",
+        "column": "created_by",
+        "shape": "DATE",
+        "confidence": 0.700861930847168,
+        "context": "GENERAL",
+        "confidenceContext": 0
+      }
+    ]
+  },
+  {
+    "schemaName": "public",
+    "tableName": "user_organization",
+    "predictions": [
+      {
+        "input": "public user_organization created_by",
+        "column": "created_by",
+        "shape": "DATE",
+        "confidence": 0.48536017537117,
+        "context": "GENERAL",
+        "confidenceContext": 0
+      }
+    ]
+  }
+]

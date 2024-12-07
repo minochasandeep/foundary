@@ -1,0 +1,28 @@
+CREATE TABLE `user` (
+    `id` INT NOT NULL AUTO_INCREMENT,
+    `email` VARCHAR(50) NOT NULL,
+    `first_name` VARCHAR(50),
+    `last_name` VARCHAR(50),
+    `phone_number` VARCHAR(20),
+    `user_type` ENUM('ADMIN', 'YOUTH', 'PROVIDER') NOT NULL,
+    `is_active` BOOLEAN NOT NULL DEFAULT TRUE,
+    `is_deleted` BOOLEAN NOT NULL DEFAULT FALSE,
+    `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    `updated_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    `created_by` VARCHAR(50),
+    `updated_by` VARCHAR(50),
+
+    PRIMARY KEY (`id`)
+);
+
+
+CREATE TABLE `surveys` (
+    `id` INT NOT NULL AUTO_INCREMENT,
+    `user_id` INT NOT NULL,
+    `token` VARCHAR(50) NOT NULL,
+    `expiry_date` TIMESTAMP NOT NULL,
+    `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    `updated_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (`user_id`) REFERENCES `user`(`id`),
+    PRIMARY KEY (`id`)
+);

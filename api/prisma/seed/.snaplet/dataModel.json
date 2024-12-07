@@ -1,0 +1,469 @@
+{
+  "models": {
+    "_prisma_migrations": {
+      "id": "FoundaryDB._prisma_migrations",
+      "schemaName": "FoundaryDB",
+      "tableName": "_prisma_migrations",
+      "fields": [
+        {
+          "id": "FoundaryDB._prisma_migrations.applied_steps_count",
+          "name": "applied_steps_count",
+          "columnName": "applied_steps_count",
+          "type": "int",
+          "isRequired": true,
+          "kind": "scalar",
+          "isList": false,
+          "isGenerated": false,
+          "sequence": false,
+          "hasDefaultValue": true,
+          "isId": false,
+          "maxLength": null
+        },
+        {
+          "id": "FoundaryDB._prisma_migrations.checksum",
+          "name": "checksum",
+          "columnName": "checksum",
+          "type": "varchar",
+          "isRequired": true,
+          "kind": "scalar",
+          "isList": false,
+          "isGenerated": false,
+          "sequence": false,
+          "hasDefaultValue": false,
+          "isId": false,
+          "maxLength": 64
+        },
+        {
+          "id": "FoundaryDB._prisma_migrations.finished_at",
+          "name": "finished_at",
+          "columnName": "finished_at",
+          "type": "datetime",
+          "isRequired": true,
+          "kind": "scalar",
+          "isList": false,
+          "isGenerated": false,
+          "sequence": false,
+          "hasDefaultValue": false,
+          "isId": false,
+          "maxLength": null
+        },
+        {
+          "id": "FoundaryDB._prisma_migrations.id",
+          "name": "id",
+          "columnName": "id",
+          "type": "varchar",
+          "isRequired": true,
+          "kind": "scalar",
+          "isList": false,
+          "isGenerated": false,
+          "sequence": false,
+          "hasDefaultValue": false,
+          "isId": true,
+          "maxLength": 36
+        },
+        {
+          "id": "FoundaryDB._prisma_migrations.logs",
+          "name": "logs",
+          "columnName": "logs",
+          "type": "text",
+          "isRequired": true,
+          "kind": "scalar",
+          "isList": false,
+          "isGenerated": false,
+          "sequence": false,
+          "hasDefaultValue": false,
+          "isId": false,
+          "maxLength": 65535
+        },
+        {
+          "id": "FoundaryDB._prisma_migrations.migration_name",
+          "name": "migration_name",
+          "columnName": "migration_name",
+          "type": "varchar",
+          "isRequired": true,
+          "kind": "scalar",
+          "isList": false,
+          "isGenerated": false,
+          "sequence": false,
+          "hasDefaultValue": false,
+          "isId": false,
+          "maxLength": 255
+        },
+        {
+          "id": "FoundaryDB._prisma_migrations.rolled_back_at",
+          "name": "rolled_back_at",
+          "columnName": "rolled_back_at",
+          "type": "datetime",
+          "isRequired": true,
+          "kind": "scalar",
+          "isList": false,
+          "isGenerated": false,
+          "sequence": false,
+          "hasDefaultValue": false,
+          "isId": false,
+          "maxLength": null
+        },
+        {
+          "id": "FoundaryDB._prisma_migrations.started_at",
+          "name": "started_at",
+          "columnName": "started_at",
+          "type": "datetime",
+          "isRequired": true,
+          "kind": "scalar",
+          "isList": false,
+          "isGenerated": false,
+          "sequence": false,
+          "hasDefaultValue": true,
+          "isId": false,
+          "maxLength": null
+        }
+      ],
+      "uniqueConstraints": [
+        {
+          "name": "FoundaryDB._prisma_migrations.id",
+          "fields": [
+            "id"
+          ]
+        }
+      ]
+    },
+    "surveys": {
+      "id": "FoundaryDB.surveys",
+      "schemaName": "FoundaryDB",
+      "tableName": "surveys",
+      "fields": [
+        {
+          "id": "FoundaryDB.surveys.created_at",
+          "name": "created_at",
+          "columnName": "created_at",
+          "type": "timestamp",
+          "isRequired": true,
+          "kind": "scalar",
+          "isList": false,
+          "isGenerated": false,
+          "sequence": false,
+          "hasDefaultValue": true,
+          "isId": false,
+          "maxLength": null
+        },
+        {
+          "id": "FoundaryDB.surveys.expiry_date",
+          "name": "expiry_date",
+          "columnName": "expiry_date",
+          "type": "timestamp",
+          "isRequired": true,
+          "kind": "scalar",
+          "isList": false,
+          "isGenerated": false,
+          "sequence": false,
+          "hasDefaultValue": false,
+          "isId": false,
+          "maxLength": null
+        },
+        {
+          "id": "FoundaryDB.surveys.id",
+          "name": "id",
+          "columnName": "id",
+          "type": "int",
+          "isRequired": true,
+          "kind": "scalar",
+          "isList": false,
+          "isGenerated": false,
+          "sequence": {
+            "identifier": "FoundaryDB.surveys.id",
+            "increment": 1,
+            "start": 1
+          },
+          "hasDefaultValue": false,
+          "isId": true,
+          "maxLength": null
+        },
+        {
+          "id": "FoundaryDB.surveys.token",
+          "name": "token",
+          "columnName": "token",
+          "type": "varchar",
+          "isRequired": true,
+          "kind": "scalar",
+          "isList": false,
+          "isGenerated": false,
+          "sequence": false,
+          "hasDefaultValue": false,
+          "isId": false,
+          "maxLength": 50
+        },
+        {
+          "id": "FoundaryDB.surveys.updated_at",
+          "name": "updated_at",
+          "columnName": "updated_at",
+          "type": "timestamp",
+          "isRequired": true,
+          "kind": "scalar",
+          "isList": false,
+          "isGenerated": false,
+          "sequence": false,
+          "hasDefaultValue": true,
+          "isId": false,
+          "maxLength": null
+        },
+        {
+          "id": "FoundaryDB.surveys.user_id",
+          "name": "user_id",
+          "columnName": "user_id",
+          "type": "int",
+          "isRequired": true,
+          "kind": "scalar",
+          "isList": false,
+          "isGenerated": false,
+          "sequence": false,
+          "hasDefaultValue": false,
+          "isId": false,
+          "maxLength": null
+        },
+        {
+          "name": "user",
+          "type": "user",
+          "isRequired": true,
+          "kind": "object",
+          "relationName": "surveysTouser",
+          "relationFromFields": [
+            "user_id"
+          ],
+          "relationToFields": [
+            "id"
+          ],
+          "isList": false,
+          "isId": false,
+          "isGenerated": false,
+          "sequence": false,
+          "hasDefaultValue": false
+        }
+      ],
+      "uniqueConstraints": [
+        {
+          "name": "FoundaryDB.surveys.id",
+          "fields": [
+            "id"
+          ]
+        }
+      ]
+    },
+    "user": {
+      "id": "FoundaryDB.user",
+      "schemaName": "FoundaryDB",
+      "tableName": "user",
+      "fields": [
+        {
+          "id": "FoundaryDB.user.created_at",
+          "name": "created_at",
+          "columnName": "created_at",
+          "type": "timestamp",
+          "isRequired": true,
+          "kind": "scalar",
+          "isList": false,
+          "isGenerated": false,
+          "sequence": false,
+          "hasDefaultValue": true,
+          "isId": false,
+          "maxLength": null
+        },
+        {
+          "id": "FoundaryDB.user.created_by",
+          "name": "created_by",
+          "columnName": "created_by",
+          "type": "varchar",
+          "isRequired": true,
+          "kind": "scalar",
+          "isList": false,
+          "isGenerated": false,
+          "sequence": false,
+          "hasDefaultValue": false,
+          "isId": false,
+          "maxLength": 50
+        },
+        {
+          "id": "FoundaryDB.user.email",
+          "name": "email",
+          "columnName": "email",
+          "type": "varchar",
+          "isRequired": true,
+          "kind": "scalar",
+          "isList": false,
+          "isGenerated": false,
+          "sequence": false,
+          "hasDefaultValue": false,
+          "isId": false,
+          "maxLength": 50
+        },
+        {
+          "id": "FoundaryDB.user.first_name",
+          "name": "first_name",
+          "columnName": "first_name",
+          "type": "varchar",
+          "isRequired": true,
+          "kind": "scalar",
+          "isList": false,
+          "isGenerated": false,
+          "sequence": false,
+          "hasDefaultValue": false,
+          "isId": false,
+          "maxLength": 50
+        },
+        {
+          "id": "FoundaryDB.user.id",
+          "name": "id",
+          "columnName": "id",
+          "type": "int",
+          "isRequired": true,
+          "kind": "scalar",
+          "isList": false,
+          "isGenerated": false,
+          "sequence": {
+            "identifier": "FoundaryDB.user.id",
+            "increment": 1,
+            "start": 1
+          },
+          "hasDefaultValue": false,
+          "isId": true,
+          "maxLength": null
+        },
+        {
+          "id": "FoundaryDB.user.is_active",
+          "name": "is_active",
+          "columnName": "is_active",
+          "type": "tinyint",
+          "isRequired": true,
+          "kind": "scalar",
+          "isList": false,
+          "isGenerated": false,
+          "sequence": false,
+          "hasDefaultValue": true,
+          "isId": false,
+          "maxLength": null
+        },
+        {
+          "id": "FoundaryDB.user.is_deleted",
+          "name": "is_deleted",
+          "columnName": "is_deleted",
+          "type": "tinyint",
+          "isRequired": true,
+          "kind": "scalar",
+          "isList": false,
+          "isGenerated": false,
+          "sequence": false,
+          "hasDefaultValue": true,
+          "isId": false,
+          "maxLength": null
+        },
+        {
+          "id": "FoundaryDB.user.last_name",
+          "name": "last_name",
+          "columnName": "last_name",
+          "type": "varchar",
+          "isRequired": true,
+          "kind": "scalar",
+          "isList": false,
+          "isGenerated": false,
+          "sequence": false,
+          "hasDefaultValue": false,
+          "isId": false,
+          "maxLength": 50
+        },
+        {
+          "id": "FoundaryDB.user.phone_number",
+          "name": "phone_number",
+          "columnName": "phone_number",
+          "type": "varchar",
+          "isRequired": true,
+          "kind": "scalar",
+          "isList": false,
+          "isGenerated": false,
+          "sequence": false,
+          "hasDefaultValue": false,
+          "isId": false,
+          "maxLength": 20
+        },
+        {
+          "id": "FoundaryDB.user.updated_at",
+          "name": "updated_at",
+          "columnName": "updated_at",
+          "type": "timestamp",
+          "isRequired": true,
+          "kind": "scalar",
+          "isList": false,
+          "isGenerated": false,
+          "sequence": false,
+          "hasDefaultValue": true,
+          "isId": false,
+          "maxLength": null
+        },
+        {
+          "id": "FoundaryDB.user.updated_by",
+          "name": "updated_by",
+          "columnName": "updated_by",
+          "type": "varchar",
+          "isRequired": true,
+          "kind": "scalar",
+          "isList": false,
+          "isGenerated": false,
+          "sequence": false,
+          "hasDefaultValue": false,
+          "isId": false,
+          "maxLength": 50
+        },
+        {
+          "id": "FoundaryDB.user.user_type",
+          "name": "user_type",
+          "columnName": "user_type",
+          "type": "enum_foundary_db_user_user_type",
+          "isRequired": true,
+          "kind": "scalar",
+          "isList": false,
+          "isGenerated": false,
+          "sequence": false,
+          "hasDefaultValue": false,
+          "isId": false,
+          "maxLength": 8
+        },
+        {
+          "name": "surveys",
+          "type": "surveys",
+          "isRequired": false,
+          "kind": "object",
+          "relationName": "surveysTouser",
+          "relationFromFields": [],
+          "relationToFields": [],
+          "isList": true,
+          "isId": false,
+          "isGenerated": false,
+          "sequence": false,
+          "hasDefaultValue": false
+        }
+      ],
+      "uniqueConstraints": [
+        {
+          "name": "FoundaryDB.user.id",
+          "fields": [
+            "id"
+          ]
+        }
+      ]
+    }
+  },
+  "enums": {
+    "enum_foundary_db_user_user_type": {
+      "schemaName": "FoundaryDB",
+      "values": [
+        {
+          "name": "ADMIN"
+        },
+        {
+          "name": "YOUTH"
+        },
+        {
+          "name": "PROVIDER"
+        }
+      ]
+    }
+  }
+}
