@@ -18,8 +18,4 @@ export class AppController {
     return this.appService.getHello();
   }
 
-  @Get("test123")
-  getTest(): string {
-    return "This is a test123 router!";
-  }
 }
