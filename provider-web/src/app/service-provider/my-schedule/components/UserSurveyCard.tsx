@@ -25,6 +25,8 @@ import {
   Alert,
 } from '@mui/material';
 
+
+
 interface User {
   CENTRE_ID: string;
   CLIENT_ID: string;
@@ -66,7 +68,7 @@ const UserSurveyCard: React.FC = () => {
 
   const fetchSubjects = async (center?: string) => {
     try {
-      const url = center ? `http://localhost:3000/subject-forms?center=${center}` : `http://localhost:3000/subject-forms`;
+      const url = `${process.env.NEXT_PUBLIC_BASE_URL}/toolbox/subject-forms`;
       const response = await axios.get(url);
       console.log('Subjects fetched:', response.data.locations);
       setSubjects(response.data.locations);
@@ -80,7 +82,7 @@ const UserSurveyCard: React.FC = () => {
   const fetchUsers = async (selectedCenter: string) => {
     try {
       const response = await axios.post(
-        'http://localhost:3000/subjects',
+        `${process.env.NEXT_PUBLIC_BASE_URL}/toolbox/subjects`,
         { LocationOID: selectedCenter },
         {
           headers: {
@@ -97,7 +99,7 @@ const UserSurveyCard: React.FC = () => {
 
   const fetchCenters = async () => {
     try {
-      const response = await axios.get('http://localhost:3000/list');
+      const response = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/toolbox/centers`);
       if (response.data.success) {
         setCenters(response.data.locations);
       }
