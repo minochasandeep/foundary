@@ -19,7 +19,7 @@ interface SurveyToken {
   expiryDate: Date;
 }
 
-@Controller('surveys')
+@Controller('toolbox')
 export class SurveysController {
   constructor(private readonly surveyService: SurveyService) {}
 
@@ -53,10 +53,10 @@ export class SurveysController {
     }
   }
   
-  /* @Get()
+  @Get("surveys")
   async getAllSurveys() :Promise<SurveyToken[]> {
     return this.surveyService.getSurvey();
-  } */
+  }
 
   
   @Post("initiate")
