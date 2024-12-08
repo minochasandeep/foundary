@@ -68,10 +68,10 @@ const UserSurveyCard: React.FC = () => {
 
   const fetchSubjects = async (center?: string) => {
     try {
-      const url = `${process.env.NEXT_PUBLIC_BASE_URL}/toolbox/subject-forms`;
-      const response = await axios.get(url);
-      console.log('Subjects fetched:', response.data.locations);
-      setSubjects(response.data.locations);
+      const url = `${process.env.NEXT_PUBLIC_BASE_URL}/toolbox/survey-forms`;
+      const response = await axios.get(url, {timeout: 10000} );
+      console.log('Subjects fetched:', response);
+      setSubjects(response.data.data.forms);
       setError(null);
     } catch (err) {
       console.error('Error fetching subjects:', err);
@@ -83,15 +83,16 @@ const UserSurveyCard: React.FC = () => {
     try {
       const response = await axios.post(
         `${process.env.NEXT_PUBLIC_BASE_URL}/toolbox/subjects`,
-        { LocationOID: selectedCenter },
+        { centreID: selectedCenter },
         {
           headers: {
             'Content-Type': 'application/json',
           },
-        }
+          timeout: 10000
+        },
       );
-      console.log('Fetched users:', response.data.locations.results);
-      setUsers(response.data.locations.results);
+      console.log('Fetched users:', response);
+      setUsers(response.data.data.subjects.results);
     } catch (error) {
       console.error('Error fetching users:', error);
     }
@@ -99,9 +100,11 @@ const UserSurveyCard: React.FC = () => {
 
   const fetchCenters = async () => {
     try {
-      const response = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/toolbox/centers`);
-      if (response.data.success) {
-        setCenters(response.data.locations);
+      const response = await axios.post(`${process.env.NEXT_PUBLIC_BASE_URL}/toolbox/centers`,{ timeout: 10000 });
+     console.log("Response center::");
+     
+      if (response.data.status === "success") {
+        setCenters(response.data.data.locations);
       }
     } catch (error) {
       console.error('Error fetching centers:', error);
@@ -135,7 +138,7 @@ const UserSurveyCard: React.FC = () => {
     setDialogOpen(false);
   };
 
-  const handleSend = () => {
+  const handleSend =  async () => {
     if (!selectedCenter || !selectedUser) {
       setSnackbarMessage('Please select both center and user.');
       setSnackbarSeverity('error');
@@ -143,7 +146,31 @@ const UserSurveyCard: React.FC = () => {
       setDialogOpen(false);
       return;
     }
+    const data =   {
+          "acronym": "YOUTH_SD.1",
+          "visitID":  1,
+          "visitOcc":  1,
+          "formOcc":  1,
+          "subjectID": selectedUser,
+          "centreID": selectedCenter,
+          "formCode": selectedSurvey,
+        }
+
+        const response = await   axios.post(
+            `${process.env.NEXT_PUBLIC_BASE_URL}/toolbox/initiate`,
+            data,
+            {
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              timeout: 10000
+            },
+          );
+    // const response = await axios.post(`${process.env.NEXT_PUBLIC_BASE_URL}/toolbox/initiate`,data,{ timeout: 10000 });
+    console.log("Response center::>>>",response);
+
     setSnackbarMessage('Survey sent successfully.');
+
     setSnackbarSeverity('success');
     setSnackbarOpen(true);
     setDialogOpen(false);

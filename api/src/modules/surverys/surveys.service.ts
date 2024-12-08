@@ -22,6 +22,26 @@ import Logger from "src/common/logger/logger";
 // import { UserOrganizationService } from "../user-organizations/user-organizations.service";
 // import { OrganizationFilter } from "src/common/filter/filter.service";
 
+enum ToolboxSurvayForms {
+  Registration = 'REGISTRATION',
+  Demographic = 'DEMOGRAPHIC',
+  ServiceRequest = 'SERVICE_REQUEST',
+  StartVisit = 'START_VISIT',
+  ORS = 'ORS',
+  POST_ORS = 'POST_ORS',
+  SRS = 'SRS',
+  SU5Q = 'SU_5Q',
+  EndVisit = 'END_VISIT_REDESIGN',
+  EndVisitCaregiver = 'END_VISIT',
+  PG_Engagement = 'PG_ENGAGEMENT',
+  PG_Family = 'PG_FAMILY',
+  PG_Gendercare = 'PG_GENDERCARE',
+  FCC_Walkin = 'FCC_WALKIN',
+  Penticton_Walkin = 'PENTICTON_WALKIN',
+  InspireO = 'INSPIRE_O',
+  K10 = 'K10',
+}
+
 
 interface SurveyToken {
     token:        string;
@@ -110,7 +130,7 @@ export class SurveyService {
     
   }
 
-  async getAllCenterSubjects(getSurveyCenterSubjectDto: GetSurveyCenterSubjectDto): Promise<any> {
+  async getAllSubjectsByCenter(getSurveyCenterSubjectDto: GetSurveyCenterSubjectDto): Promise<any> {
     const username = process.env.DACIMA_API_USER_NAME;
     const password = process.env.DACIMA_API_PASSWORD;
     if (!username || !password) {
@@ -119,11 +139,12 @@ export class SurveyService {
     const DACIMA_FOUNDARY_URL = process.env.DACIMA_FOUNDARY_URL;
 
     const inputParams = {
-      acronym: getSurveyCenterSubjectDto.acronym,
+      acronym: "YOUTH_SD.1",
       centreID: getSurveyCenterSubjectDto.centreID,
       // filters: getSurveyCenterSubjectDto.filters? getSurveyCenterSubjectDto.filters : [],
       filters: [{ fieldName: 'CENTRE_ID', value: getSurveyCenterSubjectDto.centreID }],
     };
+ 
     console.log("inputParams",inputParams);
     const subjects = await axios.post(`${DACIMA_FOUNDARY_URL}/api/subjects/search`, inputParams,{auth: {
       username: username,
@@ -148,4 +169,8 @@ export class SurveyService {
     });
   }
 
+  
+  async getSurveyForms(): Promise<string[]>  {
+    return Object.values(ToolboxSurvayForms);
+  }
 }

@@ -3,21 +3,12 @@ import { IsNotEmpty, IsOptional } from "class-validator";
 
 
 export class GetSurveyCenterSubjectDto {
-  @ApiProperty(
-    {
-      description: "Acronym of the Survey",
-      example: "FAMILY_SD.1",
-      required: true,
-      type: "string"
-    }
-  )
-  @IsNotEmpty()
-  acronym: string;
+
 
   @ApiProperty(
     {
       description: "Center of the survey",
-      example: "01",
+      example: "Richmond",
       required: true,
       type: "string"
     }
@@ -25,15 +16,4 @@ export class GetSurveyCenterSubjectDto {
   @IsNotEmpty()
   centreID: string;
 
-  @ApiProperty(
-    {
-      description: "visitID of the survey",
-      example: "[{ fieldName: 'CENTRE_ID', value: LocationOID }]",
-      required: false,
-      type: "Array"
-    }
-  )
-  @IsOptional()
-  @IsNotEmpty({ each: true })
-  filters: Array<{ fieldName: string, value: string }>;
-}
+ }

@@ -125,7 +125,7 @@
           "id": "foundarydb.surveys.subjectId",
           "name": "subjectId",
           "columnName": "subjectId",
-          "type": "int",
+          "type": "varchar",
           "isRequired": true,
           "kind": "scalar",
           "isList": false,
@@ -133,7 +133,7 @@
           "sequence": false,
           "hasDefaultValue": false,
           "isId": false,
-          "maxLength": null
+          "maxLength": 50
         },
         {
           "id": "foundarydb.surveys.token",
@@ -147,7 +147,7 @@
           "sequence": false,
           "hasDefaultValue": false,
           "isId": false,
-          "maxLength": 50
+          "maxLength": 100
         },
         {
           "id": "foundarydb.surveys.updatedAt",

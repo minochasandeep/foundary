@@ -40,9 +40,9 @@ export class SurveysController {
 
     
   @Post('subjects')
-  async getAllCenterSubjects(@Body() getSurveyCenterSubjectDto: GetSurveyCenterSubjectDto): Promise<{ success: boolean; subjects: any[] }> {
+  async getAllSubjectsByCenter(@Body() getSurveyCenterSubjectDto: GetSurveyCenterSubjectDto): Promise<{ success: boolean; subjects: any[] }> {
     try {
-      const subjects = await this.surveyService.getAllCenterSubjects(getSurveyCenterSubjectDto);
+      const subjects = await this.surveyService.getAllSubjectsByCenter(getSurveyCenterSubjectDto);
       return { success: true, subjects };
     } catch (error) {
       console.error('Error getting center subjects:', error);
@@ -52,6 +52,8 @@ export class SurveysController {
       );
     }
   }
+
+
   
   @Get("surveys")
   async getAllSurveys() :Promise<SurveyToken[]> {
@@ -126,4 +128,20 @@ export class SurveysController {
     }
     console.log(createSurveyDto);
   }
+
+
+  @Get('survey-forms')
+  async getSurveyForms(): Promise<{ success: boolean; forms: any[] }> {
+  
+    try {
+      const forms = await this.surveyService.getSurveyForms();
+      return { success: true, forms };
+    } catch (error) {
+      throw new HttpException(
+        error.message || 'Internal server error',
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      );
+    }
+  }
 }
+
