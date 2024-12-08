@@ -133,9 +133,37 @@
       "tableName": "surveys",
       "fields": [
         {
-          "id": "FoundaryDB.surveys.created_at",
-          "name": "created_at",
-          "columnName": "created_at",
+          "id": "FoundaryDB.surveys.acronym",
+          "name": "acronym",
+          "columnName": "acronym",
+          "type": "varchar",
+          "isRequired": true,
+          "kind": "scalar",
+          "isList": false,
+          "isGenerated": false,
+          "sequence": false,
+          "hasDefaultValue": false,
+          "isId": false,
+          "maxLength": 50
+        },
+        {
+          "id": "FoundaryDB.surveys.centreID",
+          "name": "centreID",
+          "columnName": "centreID",
+          "type": "varchar",
+          "isRequired": true,
+          "kind": "scalar",
+          "isList": false,
+          "isGenerated": false,
+          "sequence": false,
+          "hasDefaultValue": false,
+          "isId": false,
+          "maxLength": 50
+        },
+        {
+          "id": "FoundaryDB.surveys.createdAt",
+          "name": "createdAt",
+          "columnName": "createdAt",
           "type": "timestamp",
           "isRequired": true,
           "kind": "scalar",
@@ -147,10 +175,38 @@
           "maxLength": null
         },
         {
-          "id": "FoundaryDB.surveys.expiry_date",
-          "name": "expiry_date",
-          "columnName": "expiry_date",
+          "id": "FoundaryDB.surveys.expiryDate",
+          "name": "expiryDate",
+          "columnName": "expiryDate",
           "type": "timestamp",
+          "isRequired": true,
+          "kind": "scalar",
+          "isList": false,
+          "isGenerated": false,
+          "sequence": false,
+          "hasDefaultValue": false,
+          "isId": false,
+          "maxLength": null
+        },
+        {
+          "id": "FoundaryDB.surveys.formCode",
+          "name": "formCode",
+          "columnName": "formCode",
+          "type": "varchar",
+          "isRequired": true,
+          "kind": "scalar",
+          "isList": false,
+          "isGenerated": false,
+          "sequence": false,
+          "hasDefaultValue": false,
+          "isId": false,
+          "maxLength": 50
+        },
+        {
+          "id": "FoundaryDB.surveys.formOcc",
+          "name": "formOcc",
+          "columnName": "formOcc",
+          "type": "int",
           "isRequired": true,
           "kind": "scalar",
           "isList": false,
@@ -179,6 +235,34 @@
           "maxLength": null
         },
         {
+          "id": "FoundaryDB.surveys.status",
+          "name": "status",
+          "columnName": "status",
+          "type": "enum_foundary_db_surveys_status",
+          "isRequired": true,
+          "kind": "scalar",
+          "isList": false,
+          "isGenerated": false,
+          "sequence": false,
+          "hasDefaultValue": true,
+          "isId": false,
+          "maxLength": 10
+        },
+        {
+          "id": "FoundaryDB.surveys.subjectTd",
+          "name": "subjectTd",
+          "columnName": "subjectTd",
+          "type": "int",
+          "isRequired": true,
+          "kind": "scalar",
+          "isList": false,
+          "isGenerated": false,
+          "sequence": false,
+          "hasDefaultValue": false,
+          "isId": false,
+          "maxLength": null
+        },
+        {
           "id": "FoundaryDB.surveys.token",
           "name": "token",
           "columnName": "token",
@@ -193,9 +277,9 @@
           "maxLength": 50
         },
         {
-          "id": "FoundaryDB.surveys.updated_at",
-          "name": "updated_at",
-          "columnName": "updated_at",
+          "id": "FoundaryDB.surveys.updatedAt",
+          "name": "updatedAt",
+          "columnName": "updatedAt",
           "type": "timestamp",
           "isRequired": true,
           "kind": "scalar",
@@ -207,9 +291,9 @@
           "maxLength": null
         },
         {
-          "id": "FoundaryDB.surveys.user_id",
-          "name": "user_id",
-          "columnName": "user_id",
+          "id": "FoundaryDB.surveys.visitID",
+          "name": "visitID",
+          "columnName": "visitID",
           "type": "int",
           "isRequired": true,
           "kind": "scalar",
@@ -221,22 +305,18 @@
           "maxLength": null
         },
         {
-          "name": "user",
-          "type": "user",
+          "id": "FoundaryDB.surveys.visitOcc",
+          "name": "visitOcc",
+          "columnName": "visitOcc",
+          "type": "int",
           "isRequired": true,
-          "kind": "object",
-          "relationName": "surveysTouser",
-          "relationFromFields": [
-            "user_id"
-          ],
-          "relationToFields": [
-            "id"
-          ],
+          "kind": "scalar",
           "isList": false,
-          "isId": false,
           "isGenerated": false,
           "sequence": false,
-          "hasDefaultValue": false
+          "hasDefaultValue": false,
+          "isId": false,
+          "maxLength": null
         }
       ],
       "uniqueConstraints": [
@@ -424,20 +504,6 @@
           "hasDefaultValue": false,
           "isId": false,
           "maxLength": 8
-        },
-        {
-          "name": "surveys",
-          "type": "surveys",
-          "isRequired": false,
-          "kind": "object",
-          "relationName": "surveysTouser",
-          "relationFromFields": [],
-          "relationToFields": [],
-          "isList": true,
-          "isId": false,
-          "isGenerated": false,
-          "sequence": false,
-          "hasDefaultValue": false
         }
       ],
       "uniqueConstraints": [
@@ -451,6 +517,20 @@
     }
   },
   "enums": {
+    "enum_foundary_db_surveys_status": {
+      "schemaName": "FoundaryDB",
+      "values": [
+        {
+          "name": "PENDING"
+        },
+        {
+          "name": "INPROGRESS"
+        },
+        {
+          "name": "COMPLETED"
+        }
+      ]
+    },
     "enum_foundary_db_user_user_type": {
       "schemaName": "FoundaryDB",
       "values": [

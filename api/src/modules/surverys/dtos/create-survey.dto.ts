@@ -1,5 +1,5 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { IsEmail, IsNotEmpty } from "class-validator";
+import { IsEmail, IsNotEmpty, IsOptional } from "class-validator";
 
 export class CreateSurveyDto {
   @ApiProperty(
@@ -43,7 +43,7 @@ export class CreateSurveyDto {
       type: "number"
     }
   )
-  @IsNotEmpty()
+  @IsOptional()
   visitOcc: number;
 
   @ApiProperty(
@@ -56,4 +56,10 @@ export class CreateSurveyDto {
   )
   @IsNotEmpty()
   formOcc: number;
+
+  @IsNotEmpty()
+  centreID: string;
+
+  @IsNotEmpty()
+  formCode: string;
 }
