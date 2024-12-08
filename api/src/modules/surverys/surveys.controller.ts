@@ -55,7 +55,7 @@ export class SurveysController {
 
 
   
-  @Get("surveys")
+  @Get("initiated")
   async getAllSurveys() :Promise<SurveyToken[]> {
     return this.surveyService.getSurvey();
   }

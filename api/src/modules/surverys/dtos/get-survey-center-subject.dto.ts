@@ -4,7 +4,6 @@ import { IsNotEmpty, IsOptional } from "class-validator";
 
 export class GetSurveyCenterSubjectDto {
 
-
   @ApiProperty(
     {
       description: "Center of the survey",

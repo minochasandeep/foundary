@@ -5,7 +5,7 @@ export class CreateSurveyDto {
   @ApiProperty(
     {
       description: "Acronym of the Survey",
-      example: "FAMILY_SD.1",
+      example: "YOUTH_SD.1",
       required: true,
       type: "string"
     }
