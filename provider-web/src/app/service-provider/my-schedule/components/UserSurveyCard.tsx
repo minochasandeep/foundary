@@ -15,11 +15,23 @@ import {
   ListItem,
   ListItemText,
   Chip,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+  Button,
+  Snackbar,
+  Alert,
 } from '@mui/material';
 
 interface User {
-  id: string;
-  name: string;
+  CENTRE_ID: string;
+  CLIENT_ID: string;
+  DOB: string;
+  FIRST_NAME: string;
+  LAST_NAME: string;
+  PHN: string;
 }
 
 interface Survey {
@@ -28,98 +40,153 @@ interface Survey {
   date: string;
 }
 
+interface Subject {
+  location: string;
+}
+
 const UserSurveyCard: React.FC = () => {
-  const [users, setUsers] = useState<User[]>([]); // Users fetched from the API
-  const [selectedUser, setSelectedUser] = useState<string>(''); // Selected user
+  const [users, setUsers] = useState<User[]>([]);
+  const [selectedUser, setSelectedUser] = useState<string>('');
   const [surveys, setSurveys] = useState<Survey[]>([
     { name: 'PSQ Survey', status: 'Completed', date: 'January 12, 2021' },
     { name: 'PHQ-9 Survey', status: 'Pending', date: 'January 12, 2021' },
-    { name: 'K10 Survey', status: 'Pending', date: 'January 12, 2021' },
-    { name: 'GAD 7 Survey', status: 'Completed', date: 'January 12, 2021' },
-    { name: 'Health Survey', status: 'Completed', date: 'January 12, 2021' },
+    // { name: 'K10 Survey', status: 'Pending', date: 'January 12, 2021' },
+    // { name: 'GAD 7 Survey', status: 'Completed', date: 'January 12, 2021' },
+    // { name: 'Health Survey', status: 'Completed', date: 'January 12, 2021' },
   ]);
+  const [subjects, setSubjects] = useState<Subject[]>([]);
+  const [selectedSurvey, setSelectedSurvey] = useState<string>('');
+  const [centers, setCenters] = useState<string[]>([]);
+  const [selectedCenter, setSelectedCenter] = useState<string>('');
+  const [error, setError] = useState<string | null>(null);
+  const [dialogOpen, setDialogOpen] = useState<boolean>(false);
+  const [snackbarOpen, setSnackbarOpen] = useState<boolean>(false);
+  const [snackbarMessage, setSnackbarMessage] = useState<string>('');
+  const [snackbarSeverity, setSnackbarSeverity] = useState<'success' | 'error'>('error');
 
-  const surveyOptions = ['PSQ', 'PHQ-9', 'K10', 'GAD 7', 'Health Survey', 'GAIN-SS'];
-  const [selectedSurvey, setSelectedSurvey] = useState<string>(''); // Selected survey
-
-  // Fetch users from API
-  useEffect(() => {
-    const fetchUsers = async () => {
-      try {
-        const response = await axios.get('https://api.example.com/users'); // Replace with your API URL
-        const fetchedUsers = response.data.map((user: any) => ({
-          id: user.id,
-          name: user.name,
-        }));
-        if (fetchedUsers.length > 0) {
-          setUsers(fetchedUsers);
-        } else {
-          setDefaultUsers();
-        }
-      } catch (error) {
-        console.error('Error fetching users:', error);
-        setDefaultUsers();
-      }
-    };
-
-    const setDefaultUsers = () => {
-      setUsers([
-        { id: '1', name: 'user1' },
-        { id: '2', name: 'user2' },
-        { id: '3', name: 'user3' },
-      ]);
-    };
-
-    fetchUsers();
-  }, []);
-
-  // Handle user selection
-  const handleUserChange = (event: SelectChangeEvent<string>) => {
-    setSelectedUser(event.target.value);
-    setSelectedSurvey(''); // Reset the survey dropdown
+  const fetchSubjects = async (center?: string) => {
+    try {
+      const url = center ? `http://localhost:3000/subject-forms?center=${center}` : `http://localhost:3000/subject-forms`;
+      const response = await axios.get(url);
+      console.log('Subjects fetched:', response.data.locations);
+      setSubjects(response.data.locations);
+      setError(null);
+    } catch (err) {
+      console.error('Error fetching subjects:', err);
+      setError('Failed to load subjects');
+    }
   };
 
-  // Handle survey selection
-  const handleSurveyChange = (event: SelectChangeEvent<string>) => {
-    const newSurvey = event.target.value;
-    setSelectedSurvey(newSurvey);
+  const fetchUsers = async (selectedCenter: string) => {
+    try {
+      const response = await axios.post(
+        'http://localhost:3000/subjects',
+        { LocationOID: selectedCenter },
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
+      );
+      console.log('Fetched users:', response.data.locations.results);
+      setUsers(response.data.locations.results);
+    } catch (error) {
+      console.error('Error fetching users:', error);
+    }
+  };
 
-    // Add the new survey to the list
-    setSurveys((prevSurveys) => [
-      ...prevSurveys,
-      {
-        name: `${newSurvey} Survey`,
-        status: 'Pending',
-        date: 'December 7, 2024', // Current date for demo
-      },
-    ]);
+  const fetchCenters = async () => {
+    try {
+      const response = await axios.get('http://localhost:3000/list');
+      if (response.data.success) {
+        setCenters(response.data.locations);
+      }
+    } catch (error) {
+      console.error('Error fetching centers:', error);
+      setCenters(['center1', 'center2']);
+    }
+  };
+
+  useEffect(() => {
+    fetchCenters();
+    fetchSubjects();
+  }, []);
+
+  const handleCenterChange = (event: SelectChangeEvent<string>) => {
+    const center = event.target.value;
+    setSelectedCenter(center);
+    fetchUsers(center);
+    fetchSubjects(center); // Fetch subjects when center changes
+  };
+
+  const handleUserChange = (event: SelectChangeEvent<string>) => {
+    setSelectedUser(event.target.value);
+    setSelectedSurvey('');
+  };
+
+  const handleSurveyChange = (event: SelectChangeEvent<string>) => {
+    setSelectedSurvey(event.target.value);
+    setDialogOpen(true); // Open confirmation dialog
+  };
+
+  const handleDialogClose = () => {
+    setDialogOpen(false);
+  };
+
+  const handleSend = () => {
+    if (!selectedCenter || !selectedUser) {
+      setSnackbarMessage('Please select both center and user.');
+      setSnackbarSeverity('error');
+      setSnackbarOpen(true);
+      setDialogOpen(false);
+      return;
+    }
+    setSnackbarMessage('Survey sent successfully.');
+    setSnackbarSeverity('success');
+    setSnackbarOpen(true);
+    setDialogOpen(false);
+  };
+
+  const handleSnackbarClose = () => {
+    setSnackbarOpen(false);
   };
 
   return (
-    <Card sx={{ width: 400, padding: 2, borderRadius: 4, boxShadow: 3 , margin:2 }}>
-      {/* User Dropdown */}
-      <Box sx={{ display: 'flex', alignItems: 'center', marginBottom: 1 }}>
-        <Avatar sx={{ bgcolor: 'primary.main', marginRight: 2 }}>U</Avatar>
+    <Card sx={{ width: 400, padding: 2, borderRadius: 4, boxShadow: 3, margin: 2 }}>
+      <Box sx={{ marginBottom: 2 }}>
         <FormControl fullWidth>
-          <InputLabel>Select User</InputLabel>
-          <Select value={selectedUser} onChange={handleUserChange}>
-            {users.map((user) => (
-              <MenuItem key={user.id} value={user.id}>
-                {user.name}
+          <InputLabel>Select Center</InputLabel>
+          <Select value={selectedCenter} onChange={handleCenterChange}>
+            {centers.map((center, index) => (
+              <MenuItem key={index} value={center}>
+                {center}
               </MenuItem>
             ))}
           </Select>
         </FormControl>
       </Box>
 
-      {/* Survey Dropdown */}
-      <Box sx={{ marginBottom: 1 }}>
-        <FormControl fullWidth disabled={!selectedUser}>
+      <Box sx={{ display: 'flex', alignItems: 'center', marginBottom: 1 }}>
+        <Avatar sx={{ bgcolor: 'primary.main', marginRight: 2 }}>U</Avatar>
+        <FormControl fullWidth disabled={!selectedCenter}>
+          <InputLabel>Select User</InputLabel>
+          <Select value={selectedUser} onChange={handleUserChange}>
+            {users.map((user: User) => (
+              <MenuItem key={user.CLIENT_ID} value={user.CLIENT_ID}>
+                {user.FIRST_NAME}
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
+      </Box>
+
+      <Box sx={{ marginBottom: 0 }}>
+        <FormControl fullWidth>
           <InputLabel>Select Survey</InputLabel>
           <Select value={selectedSurvey} onChange={handleSurveyChange}>
-            {surveyOptions.map((survey) => (
-              <MenuItem key={survey} value={survey}>
-                {survey}
+            {subjects.map((subject: any, index) => (
+              <MenuItem key={index} value={subject}>
+                {subject}
               </MenuItem>
             ))}
           </Select>
@@ -127,28 +194,55 @@ const UserSurveyCard: React.FC = () => {
       </Box>
 
       {/* Surveys Section */}
-      <Box>
+      <Box sx={{ marginTop: 2 }}>
         <Typography variant="h6" gutterBottom>
           Surveys
         </Typography>
-        <Divider sx={{ marginBottom: 1 }} />
+        <Divider sx={{ marginBottom: 0 }} />
+
         <List>
           {surveys.map((survey, index) => (
-            <ListItem key={index} sx={{ display: 'flex', justifyContent: 'space-between' }}>
+        <Card>
+              <ListItem key={index} sx={{ display: 'flex', justifyContent: 'space-between' ,padding:1, }}>
               <ListItemText
                 primary={survey.name}
                 secondary={`Assigned on ${survey.date}`}
                 sx={{ maxWidth: '70%' }}
-              />
+                />
               <Chip
                 label={survey.status}
                 color={survey.status === 'Completed' ? 'success' : 'warning'}
                 size="small"
-              />
+                />
             </ListItem>
+          </Card>
           ))}
         </List>
       </Box>
+
+      <Dialog open={dialogOpen} onClose={handleDialogClose}>
+        <DialogTitle>Confirmation</DialogTitle>
+        <DialogContent>
+          <DialogContentText>Are you sure you want to send this survey?</DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleDialogClose}>Cancel</Button>
+          <Button onClick={handleSend} variant="contained" color="primary">
+            Send
+          </Button>
+        </DialogActions>
+      </Dialog>
+
+      <Snackbar
+        open={snackbarOpen}
+        autoHideDuration={3000}
+        onClose={handleSnackbarClose}
+        anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+      >
+        <Alert onClose={handleSnackbarClose} severity={snackbarSeverity} sx={{ width: '100%' }}>
+          {snackbarMessage}
+        </Alert>
+      </Snackbar>
     </Card>
   );
 };
