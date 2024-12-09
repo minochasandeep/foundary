@@ -37,10 +37,11 @@ interface User {
 }
 
 interface Survey {
-  name: string;
-  status: 'Pending' | 'Completed';
-  date: string;
-}
+    name: string;
+    status: string;
+    date: string;
+  }
+  
 
 interface Subject {
   location: string;
@@ -49,13 +50,7 @@ interface Subject {
 const UserSurveyCard: React.FC = () => {
   const [users, setUsers] = useState<User[]>([]);
   const [selectedUser, setSelectedUser] = useState<string>('');
-  const [surveys, setSurveys] = useState<Survey[]>([
-    { name: 'PSQ Survey', status: 'Completed', date: 'January 12, 2021' },
-    { name: 'PHQ-9 Survey', status: 'Pending', date: 'January 12, 2021' },
-    // { name: 'K10 Survey', status: 'Pending', date: 'January 12, 2021' },
-    // { name: 'GAD 7 Survey', status: 'Completed', date: 'January 12, 2021' },
-    // { name: 'Health Survey', status: 'Completed', date: 'January 12, 2021' },
-  ]);
+  const [surveys, setSurveys] = useState<Survey[]>([]);
   const [subjects, setSubjects] = useState<Subject[]>([]);
   const [selectedSurvey, setSelectedSurvey] = useState<string>('');
   const [centers, setCenters] = useState<string[]>([]);
@@ -138,6 +133,33 @@ const UserSurveyCard: React.FC = () => {
     setDialogOpen(false);
   };
 
+  const fetchInitiatedSurveys = async () => {
+    try {
+      const response = await axios.get(
+        `${process.env.NEXT_PUBLIC_BASE_URL}/toolbox/initiated`,
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          timeout: 10000, // Set timeout for the request
+        }
+      );
+      console.log("Initiated surveys fetched:", response);
+  // Transform API data to match Survey interface
+  const mappedSurveys: Survey[] = response.data.data.map((item: any) => ({
+    name: item.acronym || 'Unknown Survey', // Use a default value if acronym is missing
+    status: item.status || 'Unknown Status', // Use a default value if status is missing
+    date: new Date(item.createdAt).toLocaleDateString(), // Format createdAt to a readable date
+  }));
+
+  setSurveys(mappedSurveys); // Update state with transformed data
+
+      return response.data; // Return data for further use
+    } catch (error) {
+      console.error("Error fetching initiated surveys:", error);
+      throw new Error('Failed to fetch initiated surveys.');
+    }
+  };
 
 const handleSend = async () => {
     if (!selectedCenter || !selectedUser) {
@@ -173,6 +195,8 @@ const handleSend = async () => {
       console.log("Response center::>>>", response);
   
       if (response.data.status === "success") {
+          // Call the function to fetch initiated surveys
+      const initiatedSurveys = await fetchInitiatedSurveys();
         setSnackbarMessage('Survey sent successfully.');
         setSnackbarSeverity('success');
         setSnackbarOpen(true);
@@ -198,7 +222,7 @@ const handleSend = async () => {
   };
 
   return (
-    <Card sx={{ width: 400, padding: 2, borderRadius: 4, boxShadow: 3, margin: 2 }}>
+    <Card sx={{ width: 400, padding: 2, borderRadius: 4, boxShadow: 3, margin: 2 , paddingBottom:2, }}>
       <Box sx={{ marginBottom: 2 }}>
         <FormControl fullWidth>
           <InputLabel>Select Center</InputLabel>
@@ -239,32 +263,53 @@ const handleSend = async () => {
         </FormControl>
       </Box>
 
-      {/* Surveys Section */}
-      <Box sx={{ marginTop: 2 }}>
-        <Typography variant="h6" gutterBottom>
-          Surveys
-        </Typography>
-        <Divider sx={{ marginBottom: 0 }} />
+     {/* Surveys Section */}
+<Box sx={{ marginTop: 2 ,      }}>
+  <Typography variant="h6" gutterBottom>
+    Surveys
+  </Typography>
+  <Divider sx={{ marginBottom: 0 }} />
+  {/* Scrollable Container with Hidden Scrollbar */}
+  <Box
+    sx={{
+ 
+      maxHeight: 300, // Set a fixed height for the scrollable area
+      overflowY: 'auto', // Enable vertical scrolling
+    //   marginTop: 1, // Optional: add some spacing above
 
-        <List>
-          {surveys.map((survey, index) => (
-        <Card>
-              <ListItem key={index} sx={{ display: 'flex', justifyContent: 'space-between' ,padding:1, }}>
-              <ListItemText
-                primary={survey.name}
-                secondary={`Assigned on ${survey.date}`}
-                sx={{ maxWidth: '70%' }}
-                />
-              <Chip
-                label={survey.status}
-                color={survey.status === 'Completed' ? 'success' : 'warning'}
-                size="small"
-                />
-            </ListItem>
-          </Card>
-          ))}
-        </List>
-      </Box>
+      paddingRight: 1, // Add padding to avoid content being clipped by scrollbar
+      '&::-webkit-scrollbar': {
+        display: 'none', // Hide scrollbar for webkit browsers
+      },
+    }}
+  >
+    <List>
+      {surveys.map((survey, index) => (
+        <Card key={index} sx={{ marginBottom: 1 }}>
+          <ListItem
+            sx={{
+              display: 'flex',
+              justifyContent: 'space-between',
+              padding: 1,
+            }}
+          >
+            <ListItemText
+              primary={survey.name}
+              secondary={`Assigned on ${survey.date}`}
+              sx={{ maxWidth: '70%' }}
+            />
+            <Chip
+              label={survey.status}
+              color={survey.status === 'Completed' ? 'success' : 'warning'}
+              size="small"
+            />
+          </ListItem>
+        </Card>
+      ))}
+    </List>
+  </Box>
+</Box>
+
 
       <Dialog open={dialogOpen} onClose={handleDialogClose}>
         <DialogTitle>Confirmation</DialogTitle>
