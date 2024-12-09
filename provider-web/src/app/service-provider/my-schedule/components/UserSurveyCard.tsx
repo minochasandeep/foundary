@@ -24,7 +24,7 @@ import {
   Snackbar,
   Alert,
 } from '@mui/material';
-
+import moment from 'moment';
 
 
 interface User {
@@ -263,8 +263,10 @@ const handleSend = async () => {
         </FormControl>
       </Box>
 
-     {/* Surveys Section */}
-<Box sx={{ marginTop: 2 ,      }}>
+  
+
+{/* Surveys Section */}
+<Box sx={{ marginTop: 2 }}>
   <Typography variant="h6" gutterBottom>
     Surveys
   </Typography>
@@ -272,11 +274,8 @@ const handleSend = async () => {
   {/* Scrollable Container with Hidden Scrollbar */}
   <Box
     sx={{
- 
       maxHeight: 300, // Set a fixed height for the scrollable area
       overflowY: 'auto', // Enable vertical scrolling
-    //   marginTop: 1, // Optional: add some spacing above
-
       paddingRight: 1, // Add padding to avoid content being clipped by scrollbar
       '&::-webkit-scrollbar': {
         display: 'none', // Hide scrollbar for webkit browsers
@@ -295,7 +294,7 @@ const handleSend = async () => {
           >
             <ListItemText
               primary={survey.name}
-              secondary={`Assigned on ${survey.date}`}
+              secondary={`Assigned on ${moment(survey.date).format('MMMM Do YYYY, h:mm A')}`} // Beautifully formatted date
               sx={{ maxWidth: '70%' }}
             />
             <Chip
@@ -309,6 +308,7 @@ const handleSend = async () => {
     </List>
   </Box>
 </Box>
+
 
 
       <Dialog open={dialogOpen} onClose={handleDialogClose}>
