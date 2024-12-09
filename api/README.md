@@ -12,11 +12,14 @@ This is a NestJS application that uses Prisma for database management and MySQL 
 
 ### 1. Install Dependencies
 
-First, clone this repository and install the required dependencies.
 
 ```bash
 git clone <repository-url>
 cd foundary/api
+
+ First, clone this repository and install the required dependencies.
+
+ Rename sample.env with .env and replace with your mysql username and password(in sample it's root:root)
 
 # Install all npm dependency
 npm install
