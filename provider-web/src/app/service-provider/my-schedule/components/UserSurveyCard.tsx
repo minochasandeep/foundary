@@ -24,7 +24,7 @@ import {
   Snackbar,
   Alert,
 } from '@mui/material';
-
+import moment from 'moment';
 
 
 interface User {
@@ -37,10 +37,11 @@ interface User {
 }
 
 interface Survey {
-  name: string;
-  status: 'Pending' | 'Completed';
-  date: string;
-}
+    name: string;
+    status: string;
+    date: string;
+  }
+  
 
 interface Subject {
   location: string;
@@ -49,13 +50,7 @@ interface Subject {
 const UserSurveyCard: React.FC = () => {
   const [users, setUsers] = useState<User[]>([]);
   const [selectedUser, setSelectedUser] = useState<string>('');
-  const [surveys, setSurveys] = useState<Survey[]>([
-    { name: 'PSQ Survey', status: 'Completed', date: 'January 12, 2021' },
-    { name: 'PHQ-9 Survey', status: 'Pending', date: 'January 12, 2021' },
-    // { name: 'K10 Survey', status: 'Pending', date: 'January 12, 2021' },
-    // { name: 'GAD 7 Survey', status: 'Completed', date: 'January 12, 2021' },
-    // { name: 'Health Survey', status: 'Completed', date: 'January 12, 2021' },
-  ]);
+  const [surveys, setSurveys] = useState<Survey[]>([]);
   const [subjects, setSubjects] = useState<Subject[]>([]);
   const [selectedSurvey, setSelectedSurvey] = useState<string>('');
   const [centers, setCenters] = useState<string[]>([]);
@@ -133,12 +128,40 @@ const UserSurveyCard: React.FC = () => {
     setSelectedSurvey(event.target.value);
     setDialogOpen(true); // Open confirmation dialog
   };
-
+ 
   const handleDialogClose = () => {
     setDialogOpen(false);
   };
 
-  const handleSend =  async () => {
+  const fetchInitiatedSurveys = async () => {
+    try {
+      const response = await axios.get(
+        `${process.env.NEXT_PUBLIC_BASE_URL}/toolbox/initiated`,
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          timeout: 10000, // Set timeout for the request
+        }
+      );
+      console.log("Initiated surveys fetched:", response);
+  // Transform API data to match Survey interface
+  const mappedSurveys: Survey[] = response.data.data.map((item: any) => ({
+    name: item.acronym || 'Unknown Survey', // Use a default value if acronym is missing
+    status: item.status || 'Unknown Status', // Use a default value if status is missing
+    date: new Date(item.createdAt).toLocaleDateString(), // Format createdAt to a readable date
+  }));
+
+  setSurveys(mappedSurveys); // Update state with transformed data
+
+      return response.data; // Return data for further use
+    } catch (error) {
+      console.error("Error fetching initiated surveys:", error);
+      throw new Error('Failed to fetch initiated surveys.');
+    }
+  };
+
+const handleSend = async () => {
     if (!selectedCenter || !selectedUser) {
       setSnackbarMessage('Please select both center and user.');
       setSnackbarSeverity('error');
@@ -146,42 +169,60 @@ const UserSurveyCard: React.FC = () => {
       setDialogOpen(false);
       return;
     }
-    const data =   {
-          "acronym": "YOUTH_SD.1",
-          "visitID":  1,
-          "visitOcc":  1,
-          "formOcc":  1,
-          "subjectID": selectedUser,
-          "centreID": selectedCenter,
-          "formCode": selectedSurvey,
+  
+    const data = {
+      acronym: "YOUTH_SD.1",
+      visitID: 1,
+      visitOcc: 1,
+      formOcc: 1,
+      subjectID: selectedUser,
+      centreID: selectedCenter,
+      formCode: selectedSurvey,
+    };
+  
+    try {
+      const response = await axios.post(
+        `${process.env.NEXT_PUBLIC_BASE_URL}/toolbox/initiate`,
+        data,
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          timeout: 10000, // Set timeout for the request
         }
-
-        const response = await   axios.post(
-            `${process.env.NEXT_PUBLIC_BASE_URL}/toolbox/initiate`,
-            data,
-            {
-              headers: {
-                'Content-Type': 'application/json',
-              },
-              timeout: 10000
-            },
-          );
-    // const response = await axios.post(`${process.env.NEXT_PUBLIC_BASE_URL}/toolbox/initiate`,data,{ timeout: 10000 });
-    console.log("Response center::>>>",response);
-
-    setSnackbarMessage('Survey sent successfully.');
-
-    setSnackbarSeverity('success');
-    setSnackbarOpen(true);
-    setDialogOpen(false);
+      );
+  
+      console.log("Response center::>>>", response);
+  
+      if (response.data.status === "success") {
+          // Call the function to fetch initiated surveys
+      const initiatedSurveys = await fetchInitiatedSurveys();
+        setSnackbarMessage('Survey sent successfully.');
+        setSnackbarSeverity('success');
+        setSnackbarOpen(true);
+        setDialogOpen(false);
+      } else {
+        setSnackbarMessage(response.data.data.message || 'Failed to send survey.');
+        setSnackbarSeverity('error');
+        setSnackbarOpen(true);
+        setDialogOpen(false);
+      }
+    } catch (error) {
+      console.error("Error sending survey:", error);
+  
+      setSnackbarMessage('An error occurred while sending the survey. Please try again later.');
+      setSnackbarSeverity('error');
+      setSnackbarOpen(true);
+      setDialogOpen(false);
+    }
   };
-
+  
   const handleSnackbarClose = () => {
     setSnackbarOpen(false);
   };
 
   return (
-    <Card sx={{ width: 400, padding: 2, borderRadius: 4, boxShadow: 3, margin: 2 }}>
+    <Card sx={{ width: 400, padding: 2, borderRadius: 4, boxShadow: 3, margin: 2 , paddingBottom:2, }}>
       <Box sx={{ marginBottom: 2 }}>
         <FormControl fullWidth>
           <InputLabel>Select Center</InputLabel>
@@ -222,32 +263,53 @@ const UserSurveyCard: React.FC = () => {
         </FormControl>
       </Box>
 
-      {/* Surveys Section */}
-      <Box sx={{ marginTop: 2 }}>
-        <Typography variant="h6" gutterBottom>
-          Surveys
-        </Typography>
-        <Divider sx={{ marginBottom: 0 }} />
+  
 
-        <List>
-          {surveys.map((survey, index) => (
-        <Card>
-              <ListItem key={index} sx={{ display: 'flex', justifyContent: 'space-between' ,padding:1, }}>
-              <ListItemText
-                primary={survey.name}
-                secondary={`Assigned on ${survey.date}`}
-                sx={{ maxWidth: '70%' }}
-                />
-              <Chip
-                label={survey.status}
-                color={survey.status === 'Completed' ? 'success' : 'warning'}
-                size="small"
-                />
-            </ListItem>
-          </Card>
-          ))}
-        </List>
-      </Box>
+{/* Surveys Section */}
+<Box sx={{ marginTop: 2 }}>
+  <Typography variant="h6" gutterBottom>
+    Surveys
+  </Typography>
+  <Divider sx={{ marginBottom: 0 }} />
+  {/* Scrollable Container with Hidden Scrollbar */}
+  <Box
+    sx={{
+      maxHeight: 300, // Set a fixed height for the scrollable area
+      overflowY: 'auto', // Enable vertical scrolling
+      paddingRight: 1, // Add padding to avoid content being clipped by scrollbar
+      '&::-webkit-scrollbar': {
+        display: 'none', // Hide scrollbar for webkit browsers
+      },
+    }}
+  >
+    <List>
+      {surveys.map((survey, index) => (
+        <Card key={index} sx={{ marginBottom: 1 }}>
+          <ListItem
+            sx={{
+              display: 'flex',
+              justifyContent: 'space-between',
+              padding: 1,
+            }}
+          >
+            <ListItemText
+              primary={survey.name}
+              secondary={`Assigned on ${moment(survey.date).format('MMMM Do YYYY, h:mm A')}`} // Beautifully formatted date
+              sx={{ maxWidth: '70%' }}
+            />
+            <Chip
+              label={survey.status}
+              color={survey.status === 'Completed' ? 'success' : 'warning'}
+              size="small"
+            />
+          </ListItem>
+        </Card>
+      ))}
+    </List>
+  </Box>
+</Box>
+
+
 
       <Dialog open={dialogOpen} onClose={handleDialogClose}>
         <DialogTitle>Confirmation</DialogTitle>
