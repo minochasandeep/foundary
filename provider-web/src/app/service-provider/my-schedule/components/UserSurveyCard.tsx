@@ -133,12 +133,13 @@ const UserSurveyCard: React.FC = () => {
     setSelectedSurvey(event.target.value);
     setDialogOpen(true); // Open confirmation dialog
   };
-
+ 
   const handleDialogClose = () => {
     setDialogOpen(false);
   };
 
-  const handleSend =  async () => {
+
+const handleSend = async () => {
     if (!selectedCenter || !selectedUser) {
       setSnackbarMessage('Please select both center and user.');
       setSnackbarSeverity('error');
@@ -146,36 +147,52 @@ const UserSurveyCard: React.FC = () => {
       setDialogOpen(false);
       return;
     }
-    const data =   {
-          "acronym": "YOUTH_SD.1",
-          "visitID":  1,
-          "visitOcc":  1,
-          "formOcc":  1,
-          "subjectID": selectedUser,
-          "centreID": selectedCenter,
-          "formCode": selectedSurvey,
+  
+    const data = {
+      acronym: "YOUTH_SD.1",
+      visitID: 1,
+      visitOcc: 1,
+      formOcc: 1,
+      subjectID: selectedUser,
+      centreID: selectedCenter,
+      formCode: selectedSurvey,
+    };
+  
+    try {
+      const response = await axios.post(
+        `${process.env.NEXT_PUBLIC_BASE_URL}/toolbox/initiate`,
+        data,
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          timeout: 10000, // Set timeout for the request
         }
-
-        const response = await   axios.post(
-            `${process.env.NEXT_PUBLIC_BASE_URL}/toolbox/initiate`,
-            data,
-            {
-              headers: {
-                'Content-Type': 'application/json',
-              },
-              timeout: 10000
-            },
-          );
-    // const response = await axios.post(`${process.env.NEXT_PUBLIC_BASE_URL}/toolbox/initiate`,data,{ timeout: 10000 });
-    console.log("Response center::>>>",response);
-
-    setSnackbarMessage('Survey sent successfully.');
-
-    setSnackbarSeverity('success');
-    setSnackbarOpen(true);
-    setDialogOpen(false);
+      );
+  
+      console.log("Response center::>>>", response);
+  
+      if (response.data.status === "success") {
+        setSnackbarMessage('Survey sent successfully.');
+        setSnackbarSeverity('success');
+        setSnackbarOpen(true);
+        setDialogOpen(false);
+      } else {
+        setSnackbarMessage(response.data.data.message || 'Failed to send survey.');
+        setSnackbarSeverity('error');
+        setSnackbarOpen(true);
+        setDialogOpen(false);
+      }
+    } catch (error) {
+      console.error("Error sending survey:", error);
+  
+      setSnackbarMessage('An error occurred while sending the survey. Please try again later.');
+      setSnackbarSeverity('error');
+      setSnackbarOpen(true);
+      setDialogOpen(false);
+    }
   };
-
+  
   const handleSnackbarClose = () => {
     setSnackbarOpen(false);
   };
