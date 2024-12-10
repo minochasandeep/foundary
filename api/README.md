@@ -33,3 +33,30 @@ npm run migrate
 
 # To start the application
 npm run start
+```
+
+## API Detail
+```
+Surveys API
+ - /toolbox/centers
+ - /toolbox/subjects
+ - /toolbox/initiated
+ - /toolbox/initiate
+ - /toolbox/survey-forms
+
+Users API
+ - /users
+
+Form API
+ - /toolbox/form/status
+ - /toolbox/form/change-status
+ - /toolbox/form/validate
+
+Visit API
+ - /toolbox/visit/latest
+
+Subject API
+ - /toolbox/subject/detail
+ - /toolbox/subject/search-fields
+
+```
