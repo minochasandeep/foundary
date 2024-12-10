@@ -26,6 +26,12 @@ import { PrismaService } from '../prisma/prisma.service';
 import { SurveysController } from "./modules/surverys/surveys.controller";
 import { UsersService } from "./modules/users/users.service";
 import { SurveyService } from "./modules/surverys/surveys.service";
+import { SubjectsController } from "./modules/subject/subjects.controller";
+import { VisitsController } from "./modules/visit/visits.controller";
+import { FormsController } from "./modules/forms/forms.controller";
+import { SubjectService } from "./modules/subject/subjects.service";
+import { VisitService } from "./modules/visit/visits.service";
+import { FormService } from "./modules/forms/forms.service";
 @Module({
   imports: [
     JwtModule.register({
@@ -62,12 +68,15 @@ import { SurveyService } from "./modules/surverys/surveys.service";
     // SearchinatorModule,
     UtilModule,
   ],
-  controllers: [AppController,UsersController, SurveysController],
+  controllers: [AppController,UsersController, SurveysController, SubjectsController, VisitsController, FormsController],
   providers: [
     PrismaService,
     AppService,
     UsersService,
     SurveyService,
+    SubjectService, 
+    VisitService, 
+    FormService,
     {
       provide: APP_FILTER,
       useClass: HttpExceptionFilter,
